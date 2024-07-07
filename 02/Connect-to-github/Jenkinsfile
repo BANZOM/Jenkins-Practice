@@ -41,7 +41,7 @@ pipeline {
         }
         stage('Report') {
             steps {
-                echo 'Reporting....'
+                echo 'Reporting V2....'
             }
         }
     }
