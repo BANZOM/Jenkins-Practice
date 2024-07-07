@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(
+            name: 'NUMBER',
+            choices: [10,20,30,40,50,60,70,80,90],
+            description: 'Choose a number'
+        )
+    }
+
+    options {
+        buildDiscarder(logRotator(daysToKeepStr: '10', numToKeepStr: '10'))
+        timeout(time: 12, unit: 'HOURS')
+        timestamps()
+    }
+
+    triggers {
+        cron '@midnight'
+    }
+
+    stages {
+        stage('Make executable') {
+            steps {
+                sh('chmod +x ./02/Scripts-from-Jenkins/fibonacci.sh')
+            }
+        }
+
+        stage('Run with Relative path') {
+            steps {
+                sh("./02/Scripts-from-Jenkins/fibonacci.sh ${env.NUMBER}")
+            }
+        }
+
+        stage('Run with Full path') {
+            steps {
+                sh("${env.WORKSPACE}/02/Scripts-from-Jenkins/fibonacci.sh ${env.NUMBER}")
+            }
+        }
+
+        stage('Change directory and Run') {
+            steps {
+                dir("${env.WORKSPACE}/02/Scripts-from-Jenkins/") {
+                    sh("./fibonacci.sh ${env.NUMBER}")
+                }
+            }
+        }
+
+    }
+}
