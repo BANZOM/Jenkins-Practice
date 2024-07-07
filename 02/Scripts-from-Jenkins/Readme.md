@@ -1,0 +1,1 @@
+<a href='https://jenkins1.banzo.tech/job/run-scripts-pipeline/'><img src='https://jenkins1.banzo.tech/buildStatus/icon?job=run-scripts-pipeline'></a>
